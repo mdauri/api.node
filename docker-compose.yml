@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  peoplelink_database:
+    image: "postgres"
+    container_name: peoplelink_database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=peoplelink
+      - POSTGRES_DB=peoplelink
+    volumes:
+      - pgdata:/data/postgres
+
+  redis:
+    image: redis:alpine    
+    ports:
+      - 6379:6379
+
+  # app:
+  #   build: .
+  #   container_name: peoplelink_api
+  #   restart: always
+  #   ports: 
+  #     - 3333:3333
+  #     - 9229:9229
+  #   volumes:
+  #     - .:/usr/app
+  #   links:
+  #     - peoplelink_database
+  #   depends_on: 
+  #     - peoplelink_database
+      
+volumes:
+  pgdata:
+    driver: local
